@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PayJowashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: #eef2f7;
+    color: #1f2937;
+}
+
+/* HEADER */
+header {
+    background: #4f46e5;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+header h1 {
+    font-size: 28px;
+    margin: 0;
+}
+nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+nav a:hover {
+    color: #facc15;
+}
+
+/* SECURITY ICONS */
+.security i {
+    margin-left: 15px;
+    font-size: 26px;
+    cursor: pointer;
+    transition: transform 0.2s, color 0.2s;
+    color: #fff;
+}
+.security i:hover {
+    transform: scale(1.2);
+    color: #fbbf24;
+}
+
+/* DASHBOARD CARDS */
+.container {
+    padding: 25px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+}
+.card {
+    background: #fff;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: transform 0.3s, background 0.3s;
+}
+.card:hover {
+    transform: translateY(-5px);
+    background: #e0e7ff;
+}
+.card i {
+    font-size: 34px;
+    color: #4f46e5;
+}
+
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+}
+.modal-content {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 450px;
+    width: 85%;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+.modal-content h2 {
+    margin-top: 0;
+    color: #4f46e5;
+}
+.close-btn {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 26px;
+    cursor: pointer;
+    color: #1f2937;
+}
+.close-btn:hover {
+    color: #4f46e5;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>PayJow</h1>
+    <nav>
+        <a href="#">Dashboard</a>
+        <a href="#">Reports</a>
+        <a href="#">Settings</a>
+        <a href="#">Help</a>
+    </nav>
+    <div class="security">
+        <i class="fas fa-fingerprint" title="Fingerprint Login" onclick="login('Fingerprint')"></i>
+        <i class="fas fa-user-circle" title="FaceID Login" onclick="login('FaceID')"></i>
+    </div>
+</header>
+
+<div class="container">
+    <div class="card" onclick="openModal('Salary Calculator')">
+        <span>Salary Calculator</span>
+        <i class="fas fa-calculator"></i>
+    </div>
+    <div class="card" onclick="openModal('Bonus Tracker')">
+        <span>Bonus Tracker</span>
+        <i class="fas fa-gift"></i>
+    </div>
+    <div class="card" onclick="openModal('Shift Scheduler')">
+        <span>Shift Scheduler</span>
+        <i class="fas fa-calendar-alt"></i>
+    </div>
+    <div class="card" onclick="openModal('Compliance Dashboard')">
+        <span>Compliance Dashboard</span>
+        <i class="fas fa-clipboard-check"></i>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2 id="modal-title"></h2>
+        <p id="modal-desc"></p>
+    </div>
+</div>
+
+<script>
+// Open modal
+function openModal(name) {
+    document.getElementById('modal').style.display = 'flex';
+    document.getElementById('modal-title').innerText = name;
+
+    let desc = "";
+    switch(name){
+        case "Salary Calculator":
+            desc = "Quickly calculate monthly salaries and deductions.";
+            break;
+        case "Bonus Tracker":
+            desc = "Keep track of employee bonuses and rewards.";
+            break;
+        case "Shift Scheduler":
+            desc = "Organize employee shifts and schedules efficiently.";
+            break;
+        case "Compliance Dashboard":
+            desc = "Monitor compliance metrics and HR reports.";
+            break;
+        default:
+            desc = "This is a demo module.";
+    }
+    document.getElementById('modal-desc').innerText = desc;
+}
+
+// Close modal
+function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+}
+
+// Simulated login
+function login(method){
+    alert(method + " login successful!");
+}
+
+// Close modal when clicking outside
+window.onclick = function(e) {
+    const modal = document.getElementById('modal');
+    if(e.target === modal) closeModal();
+}
+</script>
+
+</body>
+</html>
