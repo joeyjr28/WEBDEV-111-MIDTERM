@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Code Nexus Event</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+        }
+
+        /* HEADER */
+        .header {
+            background: #020617;
+            padding: 15px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* LOGIN */
+        #login {
+            text-align: center;
+            margin-top: 120px;
+        }
+
+        input {
+            padding: 10px;
+            margin: 8px;
+            width: 220px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .login-btn {
+            padding: 10px;
+            width: 240px;
+            background: #22c55e;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* MAIN LAYOUT */
+        #main {
+            display: none;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 220px;
+            background: #020617;
+            height: 100%;
+            position: fixed;
+            padding-top: 20px;
+        }
+
+        .sidebar button {
+            display: block;
+            width: 90%;
+            margin: 10px auto;
+            padding: 10px;
+            background: transparent;
+            color: white;
+            border: 1px solid #334155;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .sidebar button:hover {
+            background: #1e293b;
+        }
+
+        .content {
+            margin-left: 240px;
+            padding: 20px;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">🚀 Code Nexus Event System</div>
+
+<!-- LOGIN -->
+<div id="login">
+    <h2>Login to Enter</h2>
+    <input type="text" id="username" placeholder="Username"><br>
+    <input type="password" id="password" placeholder="Password"><br>
+    <button class="login-btn" onclick="login()">Login</button>
+</div>
+
+<!-- MAIN SYSTEM -->
+<div id="main">
+    
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <button onclick="openSection('event')">🏁 Event Info</button>
+        <button onclick="openSection('speakers')">🎤 Speakers</button>
+        <button onclick="openSection('schedule')">📅 Schedule</button>
+        <button onclick="openSection('register')">📝 Register</button>
+        <button onclick="openSection('contact')">📞 Contact</button>
+        <button onclick="logout()">🚪 Logout</button>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content" id="content">
+        <h2>Welcome!</h2>
+        <p>Select a menu from the left.</p>
+    </div>
+
+</div>
+
+<script>
+// LOGIN
+function login() {
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+
+    if(user !== "" && pass !== "") {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("main").style.display = "block";
+    } else {
+        alert("Enter username and password!");
+    }
+}
+
+// LOGOUT
+function logout() {
+    document.getElementById("main").style.display = "none";
+    document.getElementById("login").style.display = "block";
+}
+
+// SECTIONS
+function openSection(section) {
+    let content = document.getElementById("content");
+
+    if(section === "event") {
+        content.innerHTML = `
+        <div class="card">
+            <h2>Event Info</h2>
+            <p>Date: April 15, 2026</p>
+            <p>Location: BGC Innovation Space</p>
+        </div>`;
+    }
+
+    else if(section === "speakers") {
+        content.innerHTML = `
+        <div class="card">
+            <h2>Speakers</h2>
+            <p>Mark Oreta - Web Dev</p>
+            <p>Alden Richards – Guest Speaker (Inspiration & Success Talk)</p>
+        </div>`;
+    }
+
+    else if(section === "schedule") {
+        content.innerHTML = `
+        <div class="card">
+            <h2>Schedule</h2>
+            <p>9AM - Opening</p>
+            <p>10AM - Talk</p>
+        </div>`;
+    }
+
+    else if(section === "register") {
+        content.innerHTML = `
+        <div class="card">
+            <h2>Register</h2>
+            <input placeholder="Name"><br>
+            <input placeholder="Email"><br>
+            <button onclick="alert('Registered!')">Submit</button>
+        </div>`;
+    }
+
+    else if(section === "contact") {
+        content.innerHTML = `
+        <div class="card">
+            <h2>Contact</h2>
+            <p>Email: codenexus@email.com</p>
+        </div>`;
+    }
+}
+</script>
+
+</body>
+</html>
