@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CakeHub</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: linear-gradient(135deg, #ffffff, #ffe5e5);
+}
+
+/* NAVBAR */
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 30px;
+    backdrop-filter: blur(15px);
+    background: rgba(179,0,0,0.9);
+    color: white;
+    position: sticky;
+    top: 0;
+}
+
+nav button {
+    margin: 5px;
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: none;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    cursor: pointer;
+}
+
+nav button:hover {
+    background: #ffd700;
+    color: #800000;
+}
+
+/* BANNER */
+.banner {
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+}
+
+.banner-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.banner-slide.active {
+    opacity: 1;
+}
+
+.banner-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(179,0,0,0.4);
+}
+
+.banner-content {
+    position: relative;
+    color: white;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* SECTIONS */
+section {
+    padding: 20px;
+}
+
+h2 {
+    color: #000000;
+}
+
+/* GRID */
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* CARD */
+.card {
+    width: 200px;
+    padding: 10px;
+    border-radius: 20px;
+    background: white;
+    text-align: center;
+    transition: 0.3s;
+    border: 1px solid #f0caca;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+button.add {
+    margin-top: 8px;
+    padding: 8px;
+    border-radius: 10px;
+    border: none;
+    background: #b30000;
+    color: white;
+    cursor: pointer;
+}
+
+/* CART */
+#cartItems {
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    max-width: 400px;
+    margin: auto;
+    border: 2px solid #b30000;
+}
+
+/* LOGIN */
+.login-box {
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    width: 250px;
+    margin: auto;
+    border-top: 5px solid #b30000;
+}
+
+input {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h2>🎂 CakeHub </h2>
+    <nav>
+        <button onclick="showPage('home')">Home</button>
+        <button onclick="showPage('shop')">Shop</button>
+        <button onclick="showPage('cart')">Cart (<span id="count">0</span>)</button>
+        <button onclick="showPage('login')">Login</button>
+        <button onclick="logout()">Logout</button>
+    </nav>
+</header>
+
+<!-- BANNER -->
+<div class="banner">
+    <div class="banner-slide active" style="background-image: url('https://images.unsplash.com/photo-1605478371310-a9f1e96b3c0f');"></div>
+    <div class="banner-slide" style="background-image: url('https://images.unsplash.com/photo-1551024601-bec78aea704b');"></div>
+    <div class="banner-slide" style="background-image: url('https://images.unsplash.com/photo-1542826438-bd32f43d626f');"></div>
+
+    <div class="banner-overlay"></div>
+    <div class="banner-content">
+        <h1>Welcome to Cakehub 🎂</h1>
+        <p>Classic cakes, premium taste</p>
+    </div>
+</div>
+
+<!-- HOME -->
+<section id="home">
+    <h2>Our Cakes</h2>
+    <div class="grid" id="cakeList"></div>
+</section>
+
+<!-- SHOP -->
+<section id="shop" style="display:none;">
+    <h2>Shop</h2>
+    <div class="grid" id="shopList"></div>
+</section>
+
+<!-- CART -->
+<section id="cart" style="display:none;">
+    <h2>Your Cart</h2>
+    <div id="cartItems"></div>
+</section>
+
+<!-- LOGIN -->
+<section id="login" style="display:none;">
+    <div class="login-box">
+        <h3>Login</h3>
+        <input id="user" placeholder="Username"><br>
+        <input id="pass" type="password" placeholder="Password"><br>
+        <button onclick="login()">Login</button>
+        <p id="loginMsg"></p>
+    </div>
+</section>
+
+<script>
+const cakes = [
+    { name:"Chocolate Cake", price:850, img:"https://stephaniessweets.com/wp-content/uploads/2020/05/IMG_0243.jpg" },
+    { name:"Strawberry Cake", price:950, img:"https://lumbre.sg/wp-content/uploads/2025/05/strawberry-cake-recipe-1746412311.jpg" },
+    { name:"Vanilla Cake", price:950, img:"https://reddessertdive.com/wp-content/uploads/2023/10/Vanilla-2048x2048.jpg" },
+    { name:"Red Velvet", price:800, img:"https://www.sippitysup.com/wp-content/uploads/2014/08/RedVelvetTEXT.jpg" },
+    { name:"Mocha Cake", price:850, img:"https://www.tasteofhome.com/wp-content/uploads/2018/01/Mocha-Cake_EXPS_FT22_33916_ST_08_12_1.jpg" }
+];
+
+let cart = [];
+let isLoggedIn = false;
+
+function displayCakes() {
+    const home = document.getElementById("cakeList");
+    const shop = document.getElementById("shopList");
+
+    home.innerHTML = "";
+    shop.innerHTML = "";
+
+    cakes.forEach((cake, index) => {
+        let card = `
+        <div class="card">
+            <img src="${cake.img}">
+            <h4>${cake.name}</h4>
+            <p>₱${cake.price}</p>
+            <button class="add" onclick="addToCart(${index})">Order</button>
+        </div>`;
+        home.innerHTML += card;
+        shop.innerHTML += card;
+    });
+}
+
+function addToCart(index) {
+    if(!isLoggedIn){
+        alert("Please login first!");
+        showPage('login');
+        return;
+    }
+    cart.push(cakes[index]);
+    updateCart();
+}
+
+function updateCart() {
+    const cartDiv = document.getElementById("cartItems");
+    const count = document.getElementById("count");
+
+    if(cart.length === 0){
+        cartDiv.innerHTML = "<p>Your cart is empty 🛒</p>";
+        count.innerText = 0;
+        return;
+    }
+
+    cartDiv.innerHTML = "";
+    let total = 0;
+
+    cart.forEach((item, index) => {
+        total += item.price;
+        cartDiv.innerHTML += `
+        <p>${item.name} - ₱${item.price}
+        <button onclick="removeItem(${index})">❌</button></p>`;
+    });
+
+    cartDiv.innerHTML += `<h3>Total: ₱${total}</h3>`;
+    count.innerText = cart.length;
+}
+
+function removeItem(index) {
+    cart.splice(index, 1);
+    updateCart();
+}
+
+function showPage(page) {
+    if((page === "cart" || page === "shop") && !isLoggedIn){
+        alert("Login muna bago mag shop/cart!");
+        page = "login";
+    }
+    document.querySelectorAll("section").forEach(sec => sec.style.display="none");
+    document.getElementById(page).style.display="block";
+}
+
+function login() {
+    let user = document.getElementById("user").value;
+    let pass = document.getElementById("pass").value;
+
+    if(user === "Nino@Gmail.com" && pass === "2007"){
+        isLoggedIn = true;
+        document.getElementById("loginMsg").innerText = "Login successful!";
+        alert("Welcome!");
+        showPage("home");
+    } else {
+        document.getElementById("loginMsg").innerText = "Wrong credentials";
+    }
+}
+
+function logout(){
+    isLoggedIn = false;
+    cart = [];
+    updateCart();
+    alert("Logged out!");
+    showPage("home");
+}
+
+let slides = document.querySelectorAll(".banner-slide");
+let index = 0;
+
+setInterval(() => {
+    slides[index].classList.remove("active");
+    index = (index + 1) % slides.length;
+    slides[index].classList.add("active");
+}, 3000);
+
+displayCakes();
+updateCart();
+</script>
+
+</body>
+</html>
