@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bite With Jowi</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #ecfdf5;
+}
+
+.header {
+    background: #16a34a;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.open-btn {
+    background: white;
+    color: #16a34a;
+    padding: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+.drawer {
+    position: fixed;
+    right: -320px;
+    top: 0;
+    width: 300px;
+    height: 100%;
+    background: #064e3b;
+    color: white;
+    padding: 20px;
+    transition: 0.3s;
+}
+
+.drawer.active {
+    right: 0;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px;
+}
+
+.food {
+    background: white;
+    width: 180px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.food img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.food button {
+    background: #16a34a;
+    color: white;
+    border: none;
+    padding: 8px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+#dashboard {
+    display: none;
+    text-align: center;
+}
+
+.menu button {
+    margin: 5px;
+    padding: 10px;
+    background: #22c55e;
+    border: none;
+    color: white;
+}
+
+.cart {
+    background: white;
+    width: 300px;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+    <div>🍱 Bite With Jowi</div>
+    <button class="open-btn" onclick="toggleDrawer()">Login</button>
+</div>
+
+<!-- FOOD MENU -->
+<div class="gallery" id="menu">
+
+    <div class="food">
+        <img src="https://www.platingsandpairings.com/wp-content/uploads/2023/07/traeger-chicken-breasts-8-scaled.jpg" alt="Chicken Meal">
+        <p>Grilled Chicken Meal</p>
+        <p>₱120</p>
+        <button onclick="addToCart('Chicken Meal',120)">Add</button>
+    </div>
+
+    <div class="food">
+        <img src="https://www.thecookingduo.com/wp-content/uploads/2024/01/Beef-Teriyaki-2-720x1080.jpg" alt="Beef Teriyaki">
+        <p>Beef Teriyaki</p>
+        <p>₱150</p>
+        <button onclick="addToCart('Beef Teriyaki',150)">Add</button>
+    </div>
+
+    <div class="food">
+        <img src="https://www.averiecooks.com/wp-content/uploads/2016/06/12superfoodssalad-5.jpg" alt="Healthy Salad">
+        <p>Healthy Salad</p>
+        <p>₱100</p>
+        <button onclick="addToCart('Healthy Salad',100)">Add</button>
+    </div>
+
+    <div class="food">
+        <img src="https://i.pinimg.com/originals/c0/ff/e6/c0ffe690ec9f61e3a82eb8f4775db207.jpg" alt="Fruit Bowl">
+        <p>Fruit Bowl</p>
+        <p>₱90</p>
+        <button onclick="addToCart('Fruit Bowl',90)">Add</button>
+    </div>
+
+    <div class="food">
+        <img src="https://www.cookingclassy.com/wp-content/uploads/2021/02/turkey-meatballs-19.jpg" alt="Fish Fillet">
+        <p>Turkey Meatballs & Pasta</p>
+        <p>₱130</p>
+        <button onclick="addToCart('Turkey Meatballs & Pasta',130)">Add</button>
+    </div>
+
+</div>
+
+<!-- LOGIN DRAWER -->
+<div class="drawer" id="drawer">
+    <h2>Login</h2>
+    <input id="username" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
+    <button onclick="login()">Enter</button>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+    <h2 id="welcome"></h2>
+
+    <div class="menu">
+        <button onclick="viewCart()">🛒 View Cart</button>
+        <button onclick="checkout()">💳 Checkout</button>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <div id="content"></div>
+</div>
+
+<script>
+let cart = [];
+
+function toggleDrawer() {
+    document.getElementById("drawer").classList.toggle("active");
+}
+
+function login() {
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+
+    if(user.length >= 3 && pass.length >= 3) {
+        document.getElementById("drawer").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+        document.getElementById("welcome").innerText = "Welcome, " + user + "!";
+    } else {
+        alert("Minimum 3 characters required!");
+    }
+}
+
+function logout() {
+    location.reload();
+}
+
+function addToCart(item, price) {
+    cart.push({item, price});
+    alert(item + " added!");
+}
+
+function viewCart() {
+    let total = 0;
+    let list = cart.map(c => {
+        total += c.price;
+        return "<li>"+c.item+" - ₱"+c.price+"</li>";
+    }).join("");
+
+    document.getElementById("content").innerHTML = `
+    <div class="cart">
+        <h3>Your Cart</h3>
+        <ul>${list}</ul>
+        <p><b>Total: ₱${total}</b></p>
+    </div>`;
+}
+
+function checkout() {
+    if(cart.length === 0) {
+        alert("Cart is empty!");
+        return;
+    }
+
+    alert("Order placed successfully!");
+    cart = [];
+    document.getElementById("content").innerHTML = "";
+}
+</script>
+
+</body>
+</html>
