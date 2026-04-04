@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JowiVest PRO</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #1f2937;
+            color: white;
+        }
+
+        /* HEADER */
+        .topbar {
+            background: #111827;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .barcode {
+            letter-spacing: 3px;
+            font-weight: bold;
+        }
+
+        /* LOGIN */
+        #login {
+            text-align: center;
+            margin-top: 120px;
+        }
+
+        input, select {
+            padding: 10px;
+            margin: 5px;
+            width: 220px;
+        }
+
+        button {
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .primary {
+            background: orange;
+            font-weight: bold;
+        }
+
+        /* MAIN */
+        #main {
+            display: none;
+        }
+
+        /* MENU */
+        .menu {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px;
+        }
+
+        .menu button {
+            background: #374151;
+            width: 180px;
+            height: 80px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .menu button:hover {
+            background: orange;
+            color: black;
+        }
+
+        /* CONTENT */
+        #content {
+            text-align: center;
+        }
+
+        .card {
+            background: #111827;
+            padding: 20px;
+            width: 350px;
+            margin: auto;
+            border-radius: 10px;
+        }
+
+        ul {
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="login">
+    <h2>JowiVestLogin</h2>
+    <input id="username" placeholder="Username"><br>
+    <input id="password" type="password" placeholder="Password"><br>
+    <button class="primary" onclick="login()">Enter System</button>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+
+    <div class="topbar">
+        <div class="logo">📦 JowiVest <span class="barcode">||| || |||</span></div>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <div class="menu">
+        <button onclick="openSection('stock')">Stock</button>
+        <button onclick="openSection('suppliers')">Suppliers</button>
+        <button onclick="openSection('orders')">Orders</button>
+        <button onclick="openSection('reports')">Reports</button>
+    </div>
+
+    <div id="content"></div>
+
+</div>
+
+<script>
+// STORAGE
+let stock = JSON.parse(localStorage.getItem("stock")) || [];
+let suppliers = JSON.parse(localStorage.getItem("suppliers")) || [];
+
+// LOGIN
+function login() {
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+
+    if(user !== "" && pass !== "") {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("main").style.display = "block";
+    } else {
+        alert("Enter login!");
+    }
+}
+
+// LOGOUT
+function logout() {
+    document.getElementById("main").style.display = "none";
+    document.getElementById("login").style.display = "block";
+}
+
+// NAVIGATION
+function openSection(section) {
+    let c = document.getElementById("content");
+
+    // STOCK
+    if(section === "stock") {
+        c.innerHTML = `
+        <div class="card">
+            <h2>Stock</h2>
+            <input id="item" placeholder="Item Name">
+            <input id="qty" placeholder="Quantity">
+            <button class="primary" onclick="addStock()">Add Item</button>
+            <ul id="stockList"></ul>
+        </div>`;
+        displayStock();
+    }
+
+    // SUPPLIERS
+    else if(section === "suppliers") {
+        c.innerHTML = `
+        <div class="card">
+            <h2>Suppliers</h2>
+            <input id="sup" placeholder="Supplier Name">
+            <button class="primary" onclick="addSupplier()">Add Supplier</button>
+            <ul id="supList"></ul>
+        </div>`;
+        displaySuppliers();
+    }
+
+    // ORDERS
+    else if(section === "orders") {
+        c.innerHTML = `
+        <div class="card">
+            <h2>Orders</h2>
+            <input id="order" placeholder="Order Name">
+            <button class="primary" onclick="alert('Order Added!')">Add Order</button>
+            <p>Simple demo only</p>
+        </div>`;
+    }
+
+    // REPORTS
+    else if(section === "reports") {
+        c.innerHTML = `
+        <div class="card">
+            <h2>Reports</h2>
+            <p>Total Items: ${stock.length}</p>
+            <p>Total Suppliers: ${suppliers.length}</p>
+        </div>`;
+    }
+}
+
+// STOCK FUNCTIONS
+function addStock() {
+    let item = document.getElementById("item").value;
+    let qty = document.getElementById("qty").value;
+
+    stock.push(item + " - " + qty);
+    localStorage.setItem("stock", JSON.stringify(stock));
+    displayStock();
+}
+
+function displayStock() {
+    let list = document.getElementById("stockList");
+    if(!list) return;
+    list.innerHTML = stock.map(i => "<li>"+i+"</li>").join("");
+}
+
+// SUPPLIERS
+function addSupplier() {
+    let s = document.getElementById("sup").value;
+
+    suppliers.push(s);
+    localStorage.setItem("suppliers", JSON.stringify(suppliers));
+    displaySuppliers();
+}
+
+function displaySuppliers() {
+    let list = document.getElementById("supList");
+    if(!list) return;
+    list.innerHTML = suppliers.map(s => "<li>"+s+"</li>").join("");
+}
+</script>
+
+</body>
+</html>
