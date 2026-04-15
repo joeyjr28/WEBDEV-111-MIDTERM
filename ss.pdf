@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HealSync Clinic</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #eef2f7;
+            text-align: center;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        input {
+            padding: 10px;
+            margin: 5px;
+            width: 220px;
+        }
+
+        button {
+            padding: 10px;
+            margin: 8px;
+            width: 220px;
+            cursor: pointer;
+        }
+
+        #dashboard, #content {
+            display: none;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            width: 300px;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div class="container" id="login">
+    <h2>HealSync Clinic Login</h2>
+    <input type="text" id="username" placeholder="Username"><br>
+    <input type="password" id="password" placeholder="Password"><br>
+    <button onclick="login()">Login</button>
+</div>
+
+<!-- DASHBOARD -->
+<div class="container" id="dashboard">
+    <h2>Dashboard</h2>
+
+    <button onclick="openSection('patients')">Patient Records</button>
+    <button onclick="openSection('appointments')">Appointments</button>
+    <button onclick="openSection('schedule')">Doctor Schedule</button>
+    <button onclick="openSection('billing')">Billing</button>
+    <button onclick="openSection('inventory')">Inventory</button>
+    <button onclick="openSection('reports')">Reports</button>
+    <button onclick="logout()">Logout</button>
+</div>
+
+<!-- CONTENT AREA -->
+<div id="content"></div>
+
+<script>
+// LOGIN
+function login() {
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+
+    // kahit ano basta may input, papasok
+    if(user !== "" && pass !== "") {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+    } else {
+        alert("Please enter username and password");
+    }
+}
+
+// LOGOUT
+function logout() {
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("content").style.display = "none";
+    document.getElementById("login").style.display = "block";
+}
+
+// OPEN SECTION
+function openSection(section) {
+    let content = document.getElementById("content");
+    content.style.display = "block";
+
+    if(section === "patients") {
+        content.innerHTML = `
+        <div class="card">
+            <h3>Patient Records</h3>
+            <p>Name: Juan Dela Cruz</p>
+            <p>Age: 25</p>
+            <p>Status: Healthy</p>
+        </div>`;
+    }
+
+    else if(section === "appointments") {
+        content.innerHTML = `
+        <div class="card">
+            <h3>Appointments</h3>
+            <p>March 30 - Checkup</p>
+            <p>April 2 - Dental</p>
+        </div>`;
+    }
+
+    else if(section === "schedule") {
+        content.innerHTML = `
+        <div class="card">
+            <h3>Doctor Schedule</h3>
+            <p>Dr. Santos - 9AM to 3PM</p>
+            <p>Dr. Cruz - 1PM to 6PM</p>
+        </div>`;
+    }
+
+    else if(section === "billing") {
+        content.innerHTML = `
+        <div class="card">
+            <h3>Billing</h3>
+            <p>Consultation: ₱500</p>
+            <p>Medicine: ₱300</p>
+        </div>`;
+    }
+
+    else if(section === "inventory") {
+        content.innerHTML = `
+        <div class="card">
+            <h3>Inventory</h3>
+            <p>Paracetamol - 100 pcs</p>
+            <p>Alcohol - 50 bottles</p>
+        </div>`;
+    }
+
+    else if(section === "reports") {
+        content.innerHTML = `
+        <div class="card">
+            <h3>Reports</h3>
+            <p>Daily Patients: 20</p>
+            <p>Weekly Income: ₱15,000</p>
+        </div>`;
+    }
+}
+</script>
+
+</body>
+</html>
