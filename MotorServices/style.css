@@ -1,0 +1,767 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* ===========================
+   NAVBAR
+   =========================== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0b0b0b;
+    padding: 15px 40px;
+}
+.logo {
+    color: #ffc107;
+    font-weight: bold;
+    font-size: 20px;
+}
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+.nav-links a {
+    color: white;
+    text-decoration: none;
+}
+.nav-links a.active {
+    color: #ffc107;
+}
+.login-btn {
+    background: #ffc107;
+    padding: 8px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+/* ===========================
+   HERO (HOME)
+   =========================== */
+.hero {
+    text-align: center;
+    padding: 100px 20px;
+    background: linear-gradient(to right, #0b0b0b, #0d1b2a);
+    color: white;
+}
+.hero h1 {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+.hero span {
+    color: #ffc107;
+}
+.hero p {
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+.hero button {
+    background: #ffc107;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* ===========================
+   SERVICES (HOME)
+   =========================== */
+.services {
+    background: #f2f2f2;
+    padding: 60px 20px;
+    text-align: center;
+}
+.services h2 {
+    margin-bottom: 40px;
+}
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 250px;
+    text-align: left;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.icon {
+    background: #ffc107;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+.card h3 {
+    margin-bottom: 10px;
+}
+
+/* ===========================
+   WHY CHOOSE (HOME)
+   =========================== */
+.why-choose {
+    background-color: #f5f5f5;
+    padding: 60px 80px;
+}
+.why-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+.why-features {
+    flex: 1;
+    min-width: 280px;
+}
+.why-features h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 30px;
+}
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+.check-icon {
+    border: 2px solid #ffc107;
+    color: #ffc107;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+.feature-item h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 4px 0;
+}
+.feature-item p {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0;
+}
+.cta-card {
+    background-color: #0b0b0b;
+    border-radius: 12px;
+    padding: 40px;
+    max-width: 420px;
+    flex-shrink: 0;
+}
+.cta-card h3 {
+    color: #ffc107;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+.cta-card p {
+    color: #ccc;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+.register-btn {
+    display: inline-block;
+    background-color: #ffc107;
+    color: #0b0b0b;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: background-color 0.2s;
+}
+.register-btn:hover {
+    background-color: #e6ac00;
+}
+
+/* ===========================
+   ABOUT PAGE - HERO
+   =========================== */
+.about-hero {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(to right, #0b0b0b, #0d1b2a);
+    color: white;
+}
+.about-hero h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+.about-hero p {
+    font-size: 1rem;
+    color: #ccc;
+}
+
+/* ===========================
+   OUR STORY
+   =========================== */
+.our-story {
+    background: #ffffff;
+    padding: 70px 20px;
+}
+.story-container {
+    max-width: 750px;
+    margin: 0 auto;
+}
+.story-container h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 25px;
+}
+.story-container p {
+    font-size: 0.95rem;
+    color: #444;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+/* ===========================
+   VALUES SECTION
+   =========================== */
+.values {
+    background: #ffffff;
+    padding: 20px 20px 80px;
+}
+.values-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+.value-item {
+    text-align: center;
+    max-width: 220px;
+}
+.value-icon {
+    background-color: #ffc107;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 20px;
+}
+.value-item h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+}
+.value-item p {
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* ===========================
+   PRODUCTS PAGE - HERO
+   =========================== */
+.products-hero {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(to right, #0b0b0b, #0d1b2a);
+    color: white;
+}
+.products-hero h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+.products-hero p {
+    font-size: 1rem;
+    color: #ccc;
+}
+
+/* ===========================
+   PRODUCTS CARDS
+   =========================== */
+.products-section {
+    background: #f2f2f2;
+    padding: 60px 40px;
+}
+.products-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.product-card {
+    background: white;
+    border-radius: 12px;
+    width: 340px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+.product-card-top {
+    background: linear-gradient(to bottom, #0d1b2a, #0b0b0b);
+    padding: 40px 20px;
+    text-align: center;
+}
+.product-icon {
+    background-color: #ffc107;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 20px;
+}
+.product-card-top h3 {
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+.product-card-body {
+    padding: 30px;
+}
+.product-card-body p {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+.product-card-body ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.product-card-body ul li {
+    font-size: 0.9rem;
+    color: #444;
+    padding: 5px 0;
+}
+.product-card-body ul li::before {
+    content: "• ";
+    color: #444;
+}
+
+/* ===========================
+   CONTACT PAGE - HERO
+   =========================== */
+.contact-hero {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(to right, #0b0b0b, #0d1b2a);
+    color: white;
+}
+.contact-hero h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+.contact-hero p {
+    font-size: 1rem;
+    color: #ccc;
+}
+
+/* ===========================
+   CONTACT SECTION
+   =========================== */
+.contact-section {
+    background: #ffffff;
+    padding: 70px 40px;
+}
+.contact-container {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+/* Left Side */
+.contact-info {
+    flex: 1;
+    min-width: 280px;
+    max-width: 480px;
+}
+.contact-info h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 15px;
+}
+.contact-intro {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 30px;
+}
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+.contact-icon {
+    background-color: #ffc107;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+.contact-item h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 5px;
+}
+.contact-item p {
+    font-size: 0.88rem;
+    color: #555;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Right Side - Form */
+.contact-form-box {
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
+    background: #f5f5f5;
+    border-radius: 12px;
+    padding: 40px;
+}
+.contact-form-box h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 25px;
+}
+.form-group {
+    margin-bottom: 18px;
+}
+.form-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+}
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background: #fff;
+    color: #1a1a1a;
+    outline: none;
+    font-family: Arial, sans-serif;
+    transition: border-color 0.2s;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #ffc107;
+}
+.form-group textarea {
+    resize: vertical;
+}
+.send-btn {
+    width: 100%;
+    background-color: #ffc107;
+    color: #0b0b0b;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.send-btn:hover {
+    background-color: #e6ac00;
+}
+
+/* ===========================
+   BY THE NUMBERS
+   =========================== */
+.numbers {
+    background-color: #f5f5f5;
+    padding: 60px 20px;
+    text-align: center;
+}
+.numbers h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 40px;
+}
+.numbers-container {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+.number-item {
+    text-align: center;
+}
+.number-item h3 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #ffc107;
+    margin-bottom: 8px;
+}
+.number-item p {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+/* ===========================
+   FOOTER
+   =========================== */
+.footer {
+    background-color: #0b0b0b;
+    color: #ccc;
+    padding: 50px 80px 20px;
+}
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto 30px;
+    flex-wrap: wrap;
+}
+.footer-brand {
+    max-width: 220px;
+}
+.footer-logo {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+.footer-brand p {
+    font-size: 0.85rem;
+    color: #aaa;
+    line-height: 1.6;
+}
+.footer-col h4 {
+    color: #ffc107;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.footer-col ul li {
+    margin-bottom: 10px;
+}
+.footer-col ul li a {
+    color: #aaa;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+.footer-col ul li a:hover {
+    color: #ffc107;
+}
+.social-icons {
+    display: flex;
+    gap: 12px;
+}
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background-color: #1e1e1e;
+    border-radius: 50%;
+    color: #ccc;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: bold;
+    transition: background-color 0.2s, color 0.2s;
+}
+.social-icon:hover {
+    background-color: #ffc107;
+    color: #0b0b0b;
+}
+.footer-bottom {
+    border-top: 1px solid #222;
+    padding-top: 20px;
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.footer-bottom p {
+    color: #555;
+    font-size: 0.85rem;
+}
+
+/* ===========================
+   LOGIN & REGISTER PAGE
+   =========================== */
+.auth-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0b0b0b 0%, #0d1b2a 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+.auth-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+.auth-logo span {
+    font-size: 2rem;
+}
+.auth-logo h1 {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+.auth-title {
+    color: white;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+.auth-subtitle {
+    color: #aaa;
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+}
+.auth-card {
+    background: white;
+    border-radius: 12px;
+    padding: 40px;
+    width: 100%;
+    max-width: 420px;
+}
+.auth-form .form-group {
+    margin-bottom: 18px;
+}
+.auth-form .form-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+}
+.auth-form .form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #1a1a1a;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.auth-form .form-group input:focus {
+    border-color: #ffc107;
+}
+.auth-form .form-group input::placeholder {
+    color: #bbb;
+}
+.auth-btn {
+    width: 100%;
+    background-color: #ffc107;
+    color: #0b0b0b;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 5px;
+    transition: background-color 0.2s;
+}
+.auth-btn:hover {
+    background-color: #e6ac00;
+}
+.auth-switch {
+    text-align: center;
+    font-size: 0.88rem;
+    color: #555;
+    margin-top: 15px;
+}
+.auth-switch a {
+    color: #ffc107;
+    text-decoration: none;
+    font-weight: 600;
+}
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+.auth-divider {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 25px 0;
+}
+
+/* Demo Accounts */
+.demo-accounts h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.demo-item {
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+}
+.demo-item strong {
+    font-size: 0.9rem;
+    color: #1a1a1a;
+    display: block;
+    margin-bottom: 4px;
+}
+.demo-item p {
+    font-size: 0.85rem;
+    color: #555;
+    margin: 0;
+}
