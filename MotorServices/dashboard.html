@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Moto Services - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <span>🏍️</span>
+            <h2>MotoServices</h2>
+        </div>
+        <p class="sidebar-role">User Portal</p>
+        <p class="sidebar-username">user</p>
+
+        <nav class="sidebar-nav">
+            <a href="#" class="sidebar-link active" onclick="showSection('dashboard', this)">
+                <span>⊞</span> Dashboard
+            </a>
+            <a href="#" class="sidebar-link" onclick="showSection('services', this)">
+                <span>🔧</span> Services
+            </a>
+            <a href="#" class="sidebar-link" onclick="showSection('feedback', this)">
+                <span>💬</span> Feedback
+            </a>
+        </nav>
+
+        <a href="login.html" class="sidebar-logout">
+            <span>→</span> Logout
+        </a>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="dashboard-main">
+
+        <!-- DASHBOARD SECTION -->
+        <div id="section-dashboard" class="dash-section">
+            <h1 class="dash-title">Welcome back, user!</h1>
+            <p class="dash-subtitle">Manage your services and track your orders</p>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📦</div>
+                    <div>
+                        <h3>5</h3>
+                        <p>Active Orders</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📅</div>
+                    <div>
+                        <h3>3</h3>
+                        <p>Appointments</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💬</div>
+                    <div>
+                        <h3>2</h3>
+                        <p>Messages</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">👤</div>
+                    <div>
+                        <h3>Gold</h3>
+                        <p>Member Status</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Grid -->
+            <div class="dash-bottom">
+                <!-- Recent Orders -->
+                <div class="dash-card">
+                    <h2>Recent Orders</h2>
+                    <div class="order-item">
+                        <div>
+                            <strong>#ORD-001</strong>
+                            <p>Brake Pads (Front)</p>
+                            <p class="order-date">2026-04-20</p>
+                        </div>
+                        <span class="badge badge-processing">Processing</span>
+                    </div>
+                    <div class="order-item">
+                        <div>
+                            <strong>#ORD-002</strong>
+                            <p>Engine Oil Filter</p>
+                            <p class="order-date">2026-04-18</p>
+                        </div>
+                        <span class="badge badge-shipped">Shipped</span>
+                    </div>
+                    <div class="order-item">
+                        <div>
+                            <strong>#ORD-003</strong>
+                            <p>Chain & Sprocket Kit</p>
+                            <p class="order-date">2026-04-15</p>
+                        </div>
+                        <span class="badge badge-delivered">Delivered</span>
+                    </div>
+                </div>
+
+                <!-- Upcoming Services -->
+                <div class="dash-card">
+                    <h2>Upcoming Services</h2>
+                    <div class="upcoming-item">
+                        <strong>Oil Change</strong>
+                        <p>2026-04-28 at 10:00 AM</p>
+                        <a href="#" class="reschedule-link">Reschedule</a>
+                    </div>
+                    <div class="upcoming-item">
+                        <strong>Brake Service</strong>
+                        <p>2026-05-05 at 2:00 PM</p>
+                        <a href="#" class="reschedule-link">Reschedule</a>
+                    </div>
+                    <div class="upcoming-item">
+                        <strong>Full Inspection</strong>
+                        <p>2026-05-12 at 11:00 AM</p>
+                        <a href="#" class="reschedule-link">Reschedule</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SERVICES SECTION -->
+        <div id="section-services" class="dash-section" style="display:none;">
+            <h1 class="dash-title">Book a Service</h1>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-info">
+                        <h3>Oil Change</h3>
+                        <p>Duration: 30 min</p>
+                    </div>
+                    <span class="service-price">$49.99</span>
+                    <button class="book-btn">📅 Book Now</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-info">
+                        <h3>Brake Service</h3>
+                        <p>Duration: 1-2 hours</p>
+                    </div>
+                    <span class="service-price">$129.99</span>
+                    <button class="book-btn">📅 Book Now</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-info">
+                        <h3>Chain Maintenance</h3>
+                        <p>Duration: 30 min</p>
+                    </div>
+                    <span class="service-price">$39.99</span>
+                    <button class="book-btn">📅 Book Now</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-info">
+                        <h3>Tire Change</h3>
+                        <p>Duration: 1 hour</p>
+                    </div>
+                    <span class="service-price">$89.99</span>
+                    <button class="book-btn">📅 Book Now</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-info">
+                        <h3>Full Inspection</h3>
+                        <p>Duration: 1 hour</p>
+                    </div>
+                    <span class="service-price">$79.99</span>
+                    <button class="book-btn">📅 Book Now</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-info">
+                        <h3>Engine Tune-Up</h3>
+                        <p>Duration: 2-3 hours</p>
+                    </div>
+                    <span class="service-price">$199.99</span>
+                    <button class="book-btn">📅 Book Now</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEEDBACK SECTION -->
+        <div id="section-feedback" class="dash-section" style="display:none;">
+            <h1 class="dash-title">Submit Feedback</h1>
+
+            <div class="feedback-card">
+                <div class="feedback-form">
+                    <p class="feedback-label">Rate your experience</p>
+                    <div class="star-rating">
+                        <span class="star" onclick="setRating(1)">☆</span>
+                        <span class="star" onclick="setRating(2)">☆</span>
+                        <span class="star" onclick="setRating(3)">☆</span>
+                        <span class="star" onclick="setRating(4)">☆</span>
+                        <span class="star" onclick="setRating(5)">☆</span>
+                    </div>
+
+                    <p class="feedback-label">Your Feedback</p>
+                    <textarea placeholder="Tell us about your experience..." rows="6"></textarea>
+
+                    <button class="book-btn" style="width:100%; margin-top: 15px;">Submit Feedback</button>
+                </div>
+
+                <hr style="border:none; border-top:1px solid #ddd; margin: 25px 0;">
+
+                <h3 style="margin-bottom:15px;">Recent Feedback</h3>
+                <div class="feedback-item">
+                    <div class="feedback-top">
+                        <span class="stars-display">★★★★★</span>
+                        <span class="feedback-date">2026-04-20</span>
+                    </div>
+                    <p>Excellent service! Very professional.</p>
+                </div>
+                <div class="feedback-item">
+                    <div class="feedback-top">
+                        <span class="stars-display">★★★★☆</span>
+                        <span class="feedback-date">2026-04-15</span>
+                    </div>
+                    <p>Good quality parts, fast delivery.</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    function showSection(name, el) {
+        // Hide all sections
+        document.querySelectorAll('.dash-section').forEach(s => s.style.display = 'none');
+        // Show selected
+        document.getElementById('section-' + name).style.display = 'block';
+        // Update active link
+        document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+        el.classList.add('active');
+    }
+
+    function setRating(n) {
+        const stars = document.querySelectorAll('.star');
+        stars.forEach((s, i) => {
+            s.textContent = i < n ? '★' : '☆';
+            s.style.color = i < n ? '#ffc107' : '#ccc';
+        });
+    }
+</script>
+
+</body>
+</html>

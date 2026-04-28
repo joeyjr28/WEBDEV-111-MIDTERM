@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Moto Services - Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="auth-page">
+
+    <!-- Logo -->
+    <div class="auth-logo">
+        <span>🏍️</span>
+        <h1>MotoServices</h1>
+    </div>
+
+    <h2 class="auth-title">Welcome Back</h2>
+    <p class="auth-subtitle">Sign in to access your account</p>
+
+    <!-- Login Card -->
+    <div class="auth-card">
+        <div class="auth-form">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="username" placeholder="Enter your username">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Enter your password">
+            </div>
+            <p id="login-error" style="color:red; font-size:0.85rem; display:none;">Invalid username or password.</p>
+            <button class="auth-btn" onclick="doLogin()">Sign In</button>
+            <p class="auth-switch">Don't have an account? <a href="register.html">Register here</a></p>
+        </div>
+
+        <hr class="auth-divider">
+
+        <!-- Demo Accounts -->
+        <div class="demo-accounts">
+            <h3>Demo Accounts</h3>
+            <div class="demo-item">
+                <strong>User Account</strong>
+                <p>Username: user | Password: user123</p>
+            </div>
+            <div class="demo-item">
+                <strong>Admin Account</strong>
+                <p>Username: admin | Password: admin123</p>
+            </div>
+            <div class="demo-item">
+                <strong>Super Admin Account</strong>
+                <p>Username: superadmin | Password: super123</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function doLogin() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const accounts = [
+            { username: 'user', password: 'user123' },
+            { username: 'admin', password: 'admin123' },
+            { username: 'superadmin', password: 'super123' }
+        ];
+
+        const valid = accounts.find(a => a.username === username && a.password === password);
+
+        if (valid) {
+            window.location.href = 'dashboard.html';
+        } else {
+            document.getElementById('login-error').style.display = 'block';
+        }
+    }
+</script>
+
+</body>
+</html>
