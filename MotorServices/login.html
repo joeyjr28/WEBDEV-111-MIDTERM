@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MotoServices - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --black: #0a0a0a; --dark: #111111; --panel: #141414; --border: #2a2a2a;
+            --accent: #f5d800; --accent-dim: #7a6c00; --white: #f5f5f0; --muted: #888;
+            --font-display: 'Bebas Neue', sans-serif; --font-body: 'DM Sans', sans-serif;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--black);
+            color: var(--white);
+            font-family: var(--font-body);
+            font-weight: 300;
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        /* LEFT PANEL */
+        .left-panel {
+            background: var(--accent);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .left-panel::before {
+            content: 'MOTO';
+            position: absolute;
+            bottom: -0.1em;
+            left: -0.05em;
+            font-family: var(--font-display);
+            font-size: 12rem;
+            color: rgba(0,0,0,0.08);
+            line-height: 1;
+            pointer-events: none;
+        }
+        .left-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 3rem;
+        }
+        .left-logo span { font-size: 1.8rem; }
+        .left-logo h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            letter-spacing: 0.06em;
+            color: #0a0a0a;
+        }
+        .left-panel h2 {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 5vw, 5rem);
+            line-height: 0.95;
+            letter-spacing: 0.04em;
+            color: #0a0a0a;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        .left-panel p {
+            font-size: 0.95rem;
+            color: rgba(0,0,0,0.6);
+            line-height: 1.7;
+            max-width: 320px;
+            position: relative;
+            z-index: 1;
+        }
+        .left-back {
+            position: absolute;
+            top: 2rem; left: 2rem;
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-weight: 500;
+            color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: color 0.2s;
+        }
+        .left-back:hover { color: #0a0a0a; }
+
+        /* RIGHT PANEL */
+        .right-panel {
+            background: var(--dark);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem;
+            border-left: 1px solid var(--border);
+        }
+
+        .right-panel h3 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.4rem;
+        }
+        .right-panel .subtitle {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 2.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1.2rem;
+        }
+        .form-group label {
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 500;
+        }
+        .form-group input {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            color: var(--white);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 300;
+            padding: 0.85rem 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+            width: 100%;
+        }
+        .form-group input:focus { border-color: var(--accent); }
+        .form-group input::placeholder { color: #444; }
+
+        .error-msg {
+            font-size: 0.8rem;
+            color: #ff4444;
+            margin-bottom: 1rem;
+            display: none;
+            padding: 0.6rem 1rem;
+            background: rgba(255,68,68,0.08);
+            border-left: 2px solid #ff4444;
+        }
+
+        .auth-btn {
+            background: var(--accent);
+            color: #0a0a0a;
+            border: none;
+            width: 100%;
+            padding: 0.95rem;
+            font-family: var(--font-body);
+            font-size: 0.82rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 0.5rem;
+        }
+        .auth-btn:hover { background: #ddc200; }
+
+        .auth-switch {
+            font-size: 0.82rem;
+            color: var(--muted);
+            text-align: center;
+            margin-top: 1.2rem;
+        }
+        .auth-switch a { color: var(--accent); text-decoration: none; font-weight: 500; }
+        .auth-switch a:hover { text-decoration: underline; }
+
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 2rem 0;
+        }
+
+        /* DEMO ACCOUNTS */
+        .demo-accounts h4 {
+            font-size: 0.72rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+        .demo-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
+        .demo-item {
+            background: var(--panel);
+            padding: 0.8rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .demo-item:hover { background: #1e1e1e; }
+        .demo-item strong {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--white);
+        }
+        .demo-item span {
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-family: monospace;
+        }
+        .demo-item .use-btn {
+            font-size: 0.68rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            body { grid-template-columns: 1fr; }
+            .left-panel { padding: 3rem 2rem; min-height: 220px; }
+            .left-panel::before { font-size: 6rem; }
+            .right-panel { padding: 2.5rem 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- LEFT -->
+<div class="left-panel">
+    <a href="index.html" class="left-back">← Back to Home</a>
+    <div class="left-logo">
+        <span>🏍️</span>
+        <h1>MOTOSERVICES</h1>
+    </div>
+    <h2>WELCOME<br>BACK.</h2>
+    <p>Sign in to your account to book services, track orders, and access exclusive deals.</p>
+</div>
+
+<!-- RIGHT -->
+<div class="right-panel">
+    <h3>SIGN IN</h3>
+    <p class="subtitle">Enter your credentials to continue</p>
+
+    <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="username" placeholder="Enter your username">
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Enter your password">
+    </div>
+
+    <div class="error-msg" id="login-error">Invalid username or password.</div>
+
+    <button class="auth-btn" onclick="doLogin()">Sign In →</button>
+    <p class="auth-switch">Don't have an account? <a href="register.html">Register here</a></p>
+
+    <hr class="divider">
+
+    <div class="demo-accounts">
+        <h4>Demo Accounts — click to fill</h4>
+        <div class="demo-list">
+            <div class="demo-item" onclick="fillLogin('user','user123')">
+                <strong>User</strong>
+                <span>user / user123</span>
+                <span class="use-btn">Use →</span>
+            </div>
+            <div class="demo-item" onclick="fillLogin('admin','admin123')">
+                <strong>Admin</strong>
+                <span>admin / admin123</span>
+                <span class="use-btn">Use →</span>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function fillLogin(u, p) {
+        document.getElementById('username').value = u;
+        document.getElementById('password').value = p;
+        document.getElementById('login-error').style.display = 'none';
+    }
+
+    function doLogin() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const accounts = [
+            { username: 'user',  password: 'user123',  redirect: 'user-dashboard.html' },
+            { username: 'admin', password: 'admin123', redirect: 'admin-dashboard.html' },
+        ];
+        const valid = accounts.find(a => a.username === username && a.password === password);
+        if (valid) {
+            window.location.href = valid.redirect;
+        } else {
+            document.getElementById('login-error').style.display = 'block';
+        }
+    }
+
+    document.getElementById('password').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') doLogin();
+    });
+</script>
+</body>
+</html>

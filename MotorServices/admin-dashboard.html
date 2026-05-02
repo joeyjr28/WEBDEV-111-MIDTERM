@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MotoServices - Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --black: #0a0a0a; --dark: #111111; --panel: #141414; --border: #2a2a2a;
+            --accent: #f5d800; --accent-dim: #7a6c00; --white: #f5f5f0; --muted: #888;
+            --font-display: 'Bebas Neue', sans-serif; --font-body: 'DM Sans', sans-serif;
+        }
+        body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; min-height: 100vh; display: flex; }
+
+        /* SIDEBAR */
+        .sidebar { width: 240px; min-height: 100vh; background: var(--dark); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; }
+        .sidebar-brand { padding: 1.8rem 1.5rem 1.2rem; border-bottom: 1px solid var(--border); }
+        .brand-logo { font-family: var(--font-display); font-size: 1.3rem; letter-spacing: 0.06em; color: var(--white); margin-bottom: 0.2rem; }
+        .brand-logo span { color: var(--accent); }
+        .brand-role { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+        .brand-user { font-size: 0.82rem; color: var(--accent); font-weight: 500; margin-top: 0.2rem; }
+        .sidebar-nav { flex: 1; padding: 1.5rem 1rem; display: flex; flex-direction: column; gap: 0.3rem; }
+        .nav-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.75rem 1rem; text-decoration: none; color: var(--muted); font-size: 0.85rem; font-weight: 500; border-left: 2px solid transparent; transition: all 0.2s; cursor: pointer; background: none; border-top: none; border-right: none; border-bottom: none; width: 100%; text-align: left; font-family: var(--font-body); }
+        .nav-item:hover { color: var(--white); background: rgba(255,255,255,0.04); border-left-color: var(--border); }
+        .nav-item.active { color: #0a0a0a; background: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+        .nav-icon { font-size: 1rem; width: 18px; text-align: center; }
+        .sidebar-logout { padding: 1rem; border-top: 1px solid var(--border); }
+        .logout-btn { display: flex; align-items: center; gap: 0.8rem; padding: 0.75rem 1rem; color: var(--muted); font-size: 0.85rem; font-weight: 500; cursor: pointer; text-decoration: none; transition: color 0.2s; }
+        .logout-btn:hover { color: var(--accent); }
+
+        /* MAIN */
+        .main { margin-left: 240px; flex: 1; padding: 3rem; min-height: 100vh; }
+        .page-header { margin-bottom: 2.5rem; }
+        .page-header h1 { font-family: var(--font-display); font-size: 2.2rem; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+        .page-header p { font-size: 0.85rem; color: var(--muted); }
+
+        /* STATS */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); margin-bottom: 2rem; }
+        .stat-card { background: var(--panel); padding: 1.8rem; display: flex; align-items: center; gap: 1.2rem; transition: background 0.2s; }
+        .stat-card:hover { background: var(--dark); }
+        .stat-icon-box { width: 48px; height: 48px; background: rgba(245,216,0,0.1); border: 1px solid var(--accent-dim); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+        .stat-info .stat-num { font-family: var(--font-display); font-size: 2rem; color: var(--accent); line-height: 1; letter-spacing: 0.04em; }
+        .stat-info .stat-label { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.2rem; }
+
+        /* CONTENT GRID */
+        .content-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 1px; background: var(--border); }
+        .content-panel { background: var(--panel); padding: 2rem; }
+        .panel-title { font-family: var(--font-display); font-size: 1.3rem; letter-spacing: 0.06em; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+
+        /* ORDERS */
+        .order-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+        .order-item:last-child { border-bottom: none; }
+        .order-info .order-id { font-size: 0.85rem; font-weight: 500; color: var(--white); }
+        .order-info .order-customer { font-size: 0.78rem; color: var(--muted); margin-top: 0.15rem; }
+        .order-right { text-align: right; }
+        .order-price { font-size: 0.88rem; color: var(--white); font-weight: 500; margin-bottom: 0.25rem; }
+        .status-badge { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; padding: 0.3rem 0.7rem; }
+        .status-pending { background: rgba(255,150,50,0.15); color: #ff9632; }
+        .status-completed { background: rgba(80,200,120,0.15); color: #50c878; }
+        .status-processing { background: rgba(245,216,0,0.15); color: var(--accent); }
+
+        /* LOW STOCK */
+        .stock-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+        .stock-item:last-child { border-bottom: none; }
+        .stock-name { font-size: 0.88rem; font-weight: 500; color: var(--white); margin-bottom: 0.15rem; }
+        .stock-cat { font-size: 0.75rem; color: var(--muted); }
+        .stock-count { font-size: 0.8rem; color: #ff4444; font-weight: 600; letter-spacing: 0.06em; }
+
+        /* PRODUCT SETTINGS TAB */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .product-table { width: 100%; border-collapse: collapse; background: var(--panel); }
+        .product-table th { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 500; padding: 0.9rem 1rem; border-bottom: 1px solid var(--border); text-align: left; background: var(--dark); }
+        .product-table td { padding: 0.9rem 1rem; border-bottom: 1px solid var(--border); font-size: 0.85rem; color: var(--white); }
+        .product-table tr:hover td { background: rgba(255,255,255,0.02); }
+        .product-table .price-col { color: var(--accent); font-weight: 500; }
+        .product-table .cat-col { color: var(--muted); font-size: 0.78rem; }
+
+        .edit-btn { background: none; border: 1px solid var(--border); color: var(--muted); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.7rem; cursor: pointer; font-family: var(--font-body); transition: all 0.2s; }
+        .edit-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+        .section-label { font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.06em; margin: 2rem 0 1rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--border); }
+
+        @media (max-width: 900px) {
+            .sidebar { width: 100%; min-height: auto; position: relative; }
+            .main { margin-left: 0; padding: 1.5rem; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .content-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+    <div class="sidebar-brand">
+        <div class="brand-logo">MOTO<span>SERVICES</span></div>
+        <div class="brand-role">Admin Panel</div>
+        <div class="brand-user">admin</div>
+    </div>
+    <nav class="sidebar-nav">
+        <button class="nav-item active" onclick="showTab('dashboard', this)">
+            <span class="nav-icon">▦</span> Dashboard
+        </button>
+        <button class="nav-item" onclick="showTab('products', this)">
+            <span class="nav-icon">⚙️</span> Product Settings
+        </button>
+    </nav>
+    <div class="sidebar-logout">
+        <a href="index.html" class="logout-btn">
+            <span>↩</span> Logout
+        </a>
+    </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+    <!-- DASHBOARD TAB -->
+    <div class="tab-content active" id="tab-dashboard">
+        <div class="page-header">
+            <h1>ADMIN DASHBOARD</h1>
+            <p>Welcome, admin</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon-box">👥</div>
+                <div class="stat-info">
+                    <div class="stat-num">1,234</div>
+                    <div class="stat-label">Total Users</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon-box">📦</div>
+                <div class="stat-info">
+                    <div class="stat-num">567</div>
+                    <div class="stat-label">Products</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon-box">₱</div>
+                <div class="stat-info">
+                    <div class="stat-num" style="font-size:1.5rem;">₱45.2K</div>
+                    <div class="stat-label">Monthly Revenue</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon-box">📈</div>
+                <div class="stat-info">
+                    <div class="stat-num">+23%</div>
+                    <div class="stat-label">Growth</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <div class="content-panel">
+                <div class="panel-title">RECENT ORDERS</div>
+                <div class="order-item">
+                    <div class="order-info">
+                        <div class="order-id">#ORD-101</div>
+                        <div class="order-customer">John Doe</div>
+                    </div>
+                    <div class="order-right">
+                        <div class="order-price">₱1,299</div>
+                        <span class="status-badge status-pending">Pending</span>
+                    </div>
+                </div>
+                <div class="order-item">
+                    <div class="order-info">
+                        <div class="order-id">#ORD-102</div>
+                        <div class="order-customer">Jane Smith</div>
+                    </div>
+                    <div class="order-right">
+                        <div class="order-price">₱850</div>
+                        <span class="status-badge status-completed">Completed</span>
+                    </div>
+                </div>
+                <div class="order-item">
+                    <div class="order-info">
+                        <div class="order-id">#ORD-103</div>
+                        <div class="order-customer">Mike Johnson</div>
+                    </div>
+                    <div class="order-right">
+                        <div class="order-price">₱2,499</div>
+                        <span class="status-badge status-processing">Processing</span>
+                    </div>
+                </div>
+                <div class="order-item">
+                    <div class="order-info">
+                        <div class="order-id">#ORD-104</div>
+                        <div class="order-customer">Sarah Williams</div>
+                    </div>
+                    <div class="order-right">
+                        <div class="order-price">₱450</div>
+                        <span class="status-badge status-completed">Completed</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-panel">
+                <div class="panel-title">LOW STOCK ITEMS</div>
+                <div class="stock-item">
+                    <div>
+                        <div class="stock-name">Brake Pads (Front)</div>
+                        <div class="stock-cat">Parts</div>
+                    </div>
+                    <span class="stock-count">5 left</span>
+                </div>
+                <div class="stock-item">
+                    <div>
+                        <div class="stock-name">Engine Oil Filter</div>
+                        <div class="stock-cat">Parts</div>
+                    </div>
+                    <span class="stock-count">8 left</span>
+                </div>
+                <div class="stock-item">
+                    <div>
+                        <div class="stock-name">Riding Gloves</div>
+                        <div class="stock-cat">Accessories</div>
+                    </div>
+                    <span class="stock-count">3 left</span>
+                </div>
+                <div class="stock-item">
+                    <div>
+                        <div class="stock-name">Chain & Sprocket Kit</div>
+                        <div class="stock-cat">Parts</div>
+                    </div>
+                    <span class="stock-count">6 left</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRODUCT SETTINGS TAB -->
+    <div class="tab-content" id="tab-products">
+        <div class="page-header">
+            <h1>PRODUCT SETTINGS</h1>
+            <p>Manage parts and accessories inventory</p>
+        </div>
+
+        <div class="section-label">PARTS</div>
+        <table class="product-table">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Engine Oil Filter</td><td class="cat-col">Engine</td><td class="price-col">₱350</td><td>8</td><td><button class="edit-btn">Edit</button></td></tr>
+                <tr><td>Brake Pads (Front)</td><td class="cat-col">Brakes</td><td class="price-col">₱850</td><td>5</td><td><button class="edit-btn">Edit</button></td></tr>
+                <tr><td>Chain & Sprocket Kit</td><td class="cat-col">Drivetrain</td><td class="price-col">₱2,500</td><td>6</td><td><button class="edit-btn">Edit</button></td></tr>
+                <tr><td>Air Filter</td><td class="cat-col">Engine</td><td class="price-col">₱450</td><td>12</td><td><button class="edit-btn">Edit</button></td></tr>
+                <tr><td>Spark Plugs (Set of 4)</td><td class="cat-col">Engine</td><td class="price-col">₱620</td><td>20</td><td><button class="edit-btn">Edit</button></td></tr>
+                <tr><td>Battery</td><td class="cat-col">Electrical</td><td class="price-col">₱1,800</td><td>9</td><td><button class="edit-btn">Edit</button></td></tr>
+            </tbody>
+        </table>
+
+        <div class="section-label">ACCESSORIES</div>
+        <table class="product-table">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Full Face Helmet</td><td class="cat-col">Safety</td><td class="price-col">₱4,500</td><td>15</td><td><button class="edit-btn">Edit</button></td></tr>
+                <tr><td>Riding Jacket</td><td class="cat-col">Apparel</td><td class="price-col">₱3,800</td><td>10</td><td><button class="edit-btn">Edit</button></td></tr>
+                <tr><td>Riding Gloves</td><td class="cat-col">Apparel</td><td class="price-col">₱950</td><td>3</td><td><button class="edit-btn">Edit</button></td></tr>
+                <tr><td>Phone Mount</td><td class="cat-col">Electronics</td><td class="price-col">₱650</td><td>18</td><td><button class="edit-btn">Edit</button></td></tr>
+                <tr><td>LED Headlight</td><td class="cat-col">Lighting</td><td class="price-col">₱2,800</td><td>7</td><td><button class="edit-btn">Edit</button></td></tr>
+                <tr><td>Handlebar Grips</td><td class="cat-col">Controls</td><td class="price-col">₱480</td><td>22</td><td><button class="edit-btn">Edit</button></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+<script>
+    function showTab(tab, el) {
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.getElementById('tab-' + tab).classList.add('active');
+        el.classList.add('active');
+    }
+</script>
+</body>
+</html>

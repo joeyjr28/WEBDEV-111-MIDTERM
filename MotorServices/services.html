@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MotoServices - Professional Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --black: #0a0a0a; --dark: #111111; --panel: #141414; --border: #2a2a2a;
+            --accent: #f5d800; --accent-dim: #7a6c00; --white: #f5f5f0; --muted: #888;
+            --font-display: 'Bebas Neue', sans-serif; --font-body: 'DM Sans', sans-serif;
+        }
+        html { scroll-behavior: smooth; }
+        body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; overflow-x: hidden; }
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; height: 64px; background: rgba(10,10,10,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+        .logo { font-family: var(--font-display); font-size: 1.6rem; letter-spacing: 0.08em; color: var(--white); text-decoration: none; }
+        .logo span { color: var(--accent); }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+        .nav-links a.active::after { content: ''; display: block; height: 1px; background: var(--accent); margin-top: 3px; }
+        .login-btn { text-decoration: none; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; color: var(--accent); border: 1px solid var(--accent-dim); padding: 0.45rem 1.2rem; transition: all 0.2s; }
+        .login-btn:hover { background: var(--accent); color: #0a0a0a; }
+
+        .page-header { padding: 7rem 3rem 3rem; border-bottom: 1px solid var(--border); }
+        .page-header h1 { font-family: var(--font-display); font-size: 2.8rem; letter-spacing: 0.06em; margin-bottom: 0.4rem; }
+        .page-header p { font-size: 0.9rem; color: var(--muted); }
+
+        /* MAIN LAYOUT */
+        .main { display: grid; grid-template-columns: 1fr 320px; gap: 0; }
+
+        /* SERVICES LIST */
+        .services-area { padding: 2.5rem 3rem; border-right: 1px solid var(--border); }
+        .services-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
+
+        .service-row { background: var(--dark); display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 1.5rem; padding: 1.8rem 2rem; cursor: pointer; transition: background 0.2s; position: relative; }
+        .service-row:hover { background: var(--panel); }
+        .service-row.selected { background: var(--panel); border-left: 2px solid var(--accent); }
+
+        .svc-checkbox { width: 20px; height: 20px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; transform: scale(1.2); }
+
+        .svc-info { display: flex; flex-direction: column; gap: 0.25rem; }
+        .svc-name { font-size: 1rem; font-weight: 500; color: var(--white); }
+        .svc-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+        .svc-duration { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-top: 0.2rem; }
+
+        .svc-price { font-family: var(--font-display); font-size: 1.8rem; color: var(--accent); letter-spacing: 0.04em; text-align: right; white-space: nowrap; }
+
+        /* SIDEBAR */
+        .sidebar { padding: 2rem; background: var(--panel); position: sticky; top: 64px; height: calc(100vh - 64px); overflow-y: auto; display: flex; flex-direction: column; gap: 1.5rem; }
+        .sidebar h3 { font-family: var(--font-display); font-size: 1.4rem; letter-spacing: 0.06em; }
+        .sidebar-empty { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+        .selected-list { display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+        .selected-item { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid var(--border); }
+        .selected-item-name { font-size: 0.83rem; color: var(--white); flex: 1; }
+        .selected-item-price { font-size: 0.83rem; color: var(--accent); font-weight: 500; margin: 0 0.5rem; }
+        .remove-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1rem; line-height: 1; padding: 0 0.3rem; transition: color 0.2s; }
+        .remove-btn:hover { color: var(--white); }
+        .sidebar-total { border-top: 1px solid var(--border); padding-top: 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .sidebar-total span { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+        .sidebar-total strong { font-family: var(--font-display); font-size: 1.8rem; color: var(--accent); letter-spacing: 0.04em; }
+        .btn-book { background: var(--accent); color: #0a0a0a; border: none; width: 100%; padding: 0.9rem; font-family: var(--font-body); font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+        .btn-book:hover { background: #ddc200; }
+        .btn-book:disabled { background: #3a3500; color: #666; cursor: not-allowed; }
+        .count-badge { display: inline-flex; align-items: center; justify-content: center; background: var(--accent); color: #0a0a0a; font-size: 0.65rem; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; margin-left: 0.4rem; }
+        .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--accent); color: #0a0a0a; padding: 0.7rem 1.5rem; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.08em; opacity: 0; transition: all 0.3s; z-index: 999; white-space: nowrap; }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        footer { background: var(--panel); border-top: 1px solid var(--border); padding: 4rem 3rem 2rem; }
+        .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border); }
+        .footer-brand .footer-logo { font-family: var(--font-display); font-size: 1.6rem; letter-spacing: 0.08em; margin-bottom: 0.8rem; }
+        .footer-brand .footer-logo span { color: var(--accent); }
+        .footer-brand p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; max-width: 240px; }
+        .footer-col h5 { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin-bottom: 1.2rem; }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+        .footer-col ul a { text-decoration: none; color: var(--white); font-size: 0.88rem; opacity: 0.7; transition: opacity 0.2s; }
+        .footer-col ul a:hover { opacity: 1; color: var(--accent); }
+        .social-row { display: flex; gap: 0.8rem; margin-top: 0.4rem; }
+        .social-icon { width: 36px; height: 36px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--muted); font-size: 0.85rem; transition: all 0.2s; }
+        .social-icon:hover { border-color: var(--accent); color: var(--accent); }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 2rem; }
+        .footer-bottom p { font-size: 0.78rem; color: var(--muted); }
+        .footer-bottom a { color: var(--accent); text-decoration: none; font-size: 0.78rem; }
+        .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        .reveal.visible { opacity: 1; transform: none; }
+        @media (max-width: 900px) {
+            nav { padding: 0 1.5rem; } .nav-links { display: none; }
+            .page-header { padding: 5rem 1.5rem 2rem; }
+            .main { grid-template-columns: 1fr; }
+            .services-area { padding: 1.5rem; border-right: none; }
+            .service-row { grid-template-columns: auto 1fr auto; gap: 1rem; }
+            .sidebar { position: fixed; bottom: 0; left: 0; right: 0; height: auto; max-height: 60vh; border-top: 1px solid var(--border); z-index: 50; }
+            .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; } footer { padding: 3rem 1.5rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <div class="logo">MOTO<span>SERVICES</span></div>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="products.html" class="active">Products / Services</a></li>
+        <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="login.html" class="login-btn">Login</a>
+</nav>
+
+<div class="page-header reveal">
+    <h1>PROFESSIONAL SERVICES</h1>
+    <p>Expert maintenance and repair services by certified technicians</p>
+</div>
+
+<div class="main">
+    <div class="services-area">
+        <div class="services-list" id="svc-list"></div>
+    </div>
+    <aside class="sidebar">
+        <h3>BOOKING LIST <span id="count-badge"></span></h3>
+        <p class="sidebar-empty" id="empty-msg">Select services you'd like to book.</p>
+        <div class="selected-list" id="selected-list"></div>
+        <div class="sidebar-total" id="total-row" style="display:none;">
+            <span>Est. Total</span>
+            <strong id="total-val">₱0</strong>
+        </div>
+        <button class="btn-book" id="book-btn" disabled onclick="sendBooking()">Book Services →</button>
+    </aside>
+</div>
+
+<footer>
+    <div class="footer-top">
+        <div class="footer-brand">
+            <div class="footer-logo">🏍️ MOTO<span>SERVICES</span></div>
+            <p>Your trusted partner for all motorcycle service needs — parts, accessories, and professional repair.</p>
+        </div>
+        <div class="footer-col">
+            <h5>Quick Links</h5>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="products.html">Products / Services</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h5>Services</h5>
+            <ul>
+                <li><a href="parts.html">Parts</a></li>
+                <li><a href="accessories.html">Accessories</a></li>
+                <li><a href="services.html">Services</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h5>Follow Us</h5>
+            <div class="social-row">
+                <a href="#" class="social-icon">f</a>
+                <a href="#" class="social-icon">in</a>
+                <a href="#" class="social-icon">tw</a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 MotoServices. All rights reserved.</p>
+        <a href="register.html">Register Now →</a>
+    </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const services = [
+    { id: 1, name: 'Oil Change',        desc: 'Complete oil and filter change with inspection',   duration: '30 minutes',  price: 350  },
+    { id: 2, name: 'Brake Service',     desc: 'Brake pad replacement and system inspection',      duration: '1-2 hours',   price: 950  },
+    { id: 3, name: 'Chain Maintenance', desc: 'Chain cleaning, lubrication, and adjustment',      duration: '30 minutes',  price: 280  },
+    { id: 4, name: 'Tire Change',       desc: 'Tire removal, installation, and balancing',        duration: '1 hour',      price: 750  },
+    { id: 5, name: 'Full Inspection',   desc: 'Comprehensive 25-point safety inspection',         duration: '1 hour',      price: 650  },
+    { id: 6, name: 'Engine Tune-Up',    desc: 'Complete engine tuning and optimization',          duration: '2-3 hours',   price: 1800 },
+];
+
+let selected = new Set();
+
+function renderList() {
+    document.getElementById('svc-list').innerHTML = services.map(s => `
+        <div class="service-row ${selected.has(s.id) ? 'selected' : ''}" onclick="toggle(${s.id})">
+            <input type="checkbox" class="svc-checkbox" ${selected.has(s.id) ? 'checked' : ''} onclick="event.stopPropagation(); toggle(${s.id})">
+            <div class="svc-info">
+                <span class="svc-name">${s.name}</span>
+                <span class="svc-desc">${s.desc}</span>
+                <span class="svc-duration">⏱ ${s.duration}</span>
+            </div>
+            <span class="svc-price">₱${s.price.toLocaleString()}</span>
+        </div>
+    `).join('');
+}
+
+function toggle(id) {
+    if (selected.has(id)) { selected.delete(id); } else { selected.add(id); showToast('Added to booking list'); }
+    renderList();
+    renderSidebar();
+}
+
+function renderSidebar() {
+    const list = document.getElementById('selected-list');
+    const empty = document.getElementById('empty-msg');
+    const totalRow = document.getElementById('total-row');
+    const btn = document.getElementById('book-btn');
+    const badge = document.getElementById('count-badge');
+    const sel = services.filter(s => selected.has(s.id));
+    badge.innerHTML = sel.length > 0 ? `<span class="count-badge">${sel.length}</span>` : '';
+    if (sel.length === 0) { empty.style.display = 'block'; list.innerHTML = ''; totalRow.style.display = 'none'; btn.disabled = true; return; }
+    empty.style.display = 'none'; btn.disabled = false;
+    const total = sel.reduce((sum, s) => sum + s.price, 0);
+    totalRow.style.display = 'flex';
+    document.getElementById('total-val').textContent = '₱' + total.toLocaleString();
+    list.innerHTML = sel.map(s => `
+        <div class="selected-item">
+            <span class="selected-item-name">${s.name}</span>
+            <span class="selected-item-price">₱${s.price.toLocaleString()}</span>
+            <button class="remove-btn" onclick="toggle(${s.id})">✕</button>
+        </div>
+    `).join('');
+}
+
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function sendBooking() {
+    showToast("Booking request sent! We'll confirm shortly.");
+    selected.clear();
+    renderList();
+    renderSidebar();
+}
+
+renderList();
+renderSidebar();
+const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }}), { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
